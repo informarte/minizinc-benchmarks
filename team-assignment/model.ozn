@@ -1,4 +1,0 @@
-output ["Team = "++format(Team)++";\n","objective = "++format(objective)++";\n"];
-int: players = 168;
-array [1..players] of int: Team;
-int: objective;

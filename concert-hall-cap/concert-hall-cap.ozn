@@ -1,4 +1,0 @@
-output ["assign = "++format(assign)++";\n","objective = "++format(objective)++";\n"];
-set of int: Offer = 1..28;
-array [Offer] of int: assign;
-int: objective;

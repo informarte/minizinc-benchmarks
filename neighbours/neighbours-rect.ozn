@@ -1,6 +1,0 @@
-output [(if c==1 then "% " else "" endif++""++format(x[r,c])++"")++if c==m then "\n" else " " endif | r in Rows, c in Cols, ]++["x = array2d("++format(Rows)++","++format(Cols)++","++format(x)++");\n","objective = "++format(objective)++";\n"];
-int: m = 4;
-set of int: Rows = 1..9;
-set of int: Cols = 1..4;
-array [Rows,Cols] of int: x;
-int: objective;
