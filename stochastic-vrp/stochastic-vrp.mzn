@@ -45,19 +45,24 @@ constraint forall ( n in END_DEPOT_NODES ) (
 constraint forall ( sc in SC ) ( 
     forall ( n in START_DEPOT_NODES ) ( arrivalTime[sc, n]==0 ) 
 );
-constraint forall ( sc in SC ) ( 
-    forall ( n in NODES ) ( successor[sc, predecessor[sc, n]]==n ) 
+constraint redundant_constraint(
+    forall ( sc in SC ) ( 
+        forall ( n in NODES ) ( successor[sc, predecessor[sc, n]]==n ) 
+    )
 );
-constraint forall ( sc in SC ) ( 
-    forall ( n in NODES ) ( predecessor[sc, successor[sc, n]]==n ) 
+constraint redundant_constraint(
+    forall ( sc in SC ) ( 
+        forall ( n in NODES ) ( predecessor[sc, successor[sc, n]]==n )
+    )
 );
-constraint forall ( sc in SC ) ( circuit ( i in NODES ) ( successor[sc, i] ) 
+constraint forall ( sc in SC ) ( circuit ( i in NODES ) ( successor[sc, i] ) );
+constraint redundant_constraint(
+    forall ( sc in SC ) ( circuit ( i in NODES ) ( predecessor[sc, i] ) )
 );
-constraint forall ( sc in SC ) ( 
-    circuit ( i in NODES ) ( predecessor[sc, i] ) 
-);
-constraint forall ( sc in SC ) ( 
-    forall ( n in CUSTOMER ) ( vehicle[predecessor[sc, n]]==vehicle[n] ) 
+constraint redundant_constraint(
+    forall ( sc in SC ) ( 
+        forall ( n in CUSTOMER ) ( vehicle[predecessor[sc, n]]==vehicle[n] )
+    )
 );
 constraint forall ( sc in SC ) ( 
     forall ( n in CUSTOMER ) ( vehicle[successor[sc, n]]==vehicle[n] ) 

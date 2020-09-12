@@ -126,14 +126,14 @@ constraint forall (i in SENODES) (arr[i] == ser[i]);
 constraint forall (i in SENODES) (ser[i] == dep[i]);
 
 % Accumulate time along route
-constraint forall (i in RSNODES) (dep[i] + time[i,succ[i]] == arr[succ[i]]);
+constraint forall (i in RSNODES) (dep[i] + time[i,succ[i]] <= arr[succ[i]]);
 
 %%%%%%%%%%%%%%%%%%%%
 % Load constraints %
 %%%%%%%%%%%%%%%%%%%%
 
-% Accumulate loadalong route
-constraint forall (i in RSNODES) (load[i] + qq[succ[i]] == load[succ[i]]);
+% Accumulate load along route
+constraint forall (i in RSNODES) (load[i] + qq[succ[i]] <= load[succ[i]]);
 
 % Fix load at start nodes and end nodes
 constraint forall (i in SENODES) (load[i] == 0);

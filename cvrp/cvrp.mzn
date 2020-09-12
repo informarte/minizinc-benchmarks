@@ -159,11 +159,11 @@ constraint
 
 constraint 
    forall(n in CUSTOMER) (
-      load[n] + demand[n] = load[successor[n]]
+      load[n] + demand[n] <= load[successor[n]]
    );
 constraint
    forall(n in START_DEPOT_NODES) (
-      load[n] = load[successor[n]] 
+      load[n] <= load[successor[n]] 
    );
 
 
@@ -190,9 +190,8 @@ minimize objective; % traveltime
 output 
    [ "objective = "] ++ [show(objective)] ++
    [ ";\nvehicle = " ] ++ [ show(vehicle) ]++
-   [ ";\narrivalTime = " ] ++ 
-   [ show(arrivalTime) ]  ++ 
-   [ ";\nsuccessor = "] ++          [ show(successor) ] ++
-%            | n in NODES  ++
+   [ ";\nload = " ] ++ [ show(load) ]++
+   [ ";\narrivalTime = " ] ++ [ show(arrivalTime) ]  ++ 
+   [ ";\nsuccessor = "] ++ [ show(successor) ] ++
    [ ";\n"]
 ;
