@@ -417,7 +417,7 @@ constraint redundant_constraint(
 );
 
 % Ad hoc: detect symmetry among location values 1..31
-constraint symmetry_breaking_constraint (
+constraint redundant_constraint (
   forall(i in index_set_1of2(funLocDomain))(
     let {int: lo = funLocDomain[i,2],
          int: hi = funLocDomain[i,3]} in
@@ -508,13 +508,10 @@ solve ::
   )
 minimize objective;
 
-output [ "sel = ", show(sel), ";\n"
-       , "def = ", show(def), ";\n"
-       , "loc = ", show(loc), ";\n"
-       , "place = ", show(place), ";\n"
-       , "succ = ", show(succ), ";\n"
-       , "blockValueForNull = ", show(blockValueForNull), ";\n"
-       , "locValueForNull = ", show(locValueForNull), ";\n"
-       , "objective = ", show(objective), ";\n"
+output [ "sel = array1d(\(allMatches), \(sel));\n"
+       , "def = array1d(\(allDataInFunction), \(def));\n"
+       , "loc = array1d(\(allDataInFunction), \(loc));\n"
+       , "place = array1d(\(allMatches), \(place));\n"
+       , "succ = array1d(\(allBlocksInFunctionPlusNull), \(succ));\n"
+       , "objective = \(objective);\n"
        ];
-
