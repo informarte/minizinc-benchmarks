@@ -10,7 +10,6 @@
 
 N = 7;
 MinK = 7;
-FixedK = true;
 Capacity = 6;
 Demands = [4,1,5,2,2,4,3];
 X = array1d(0..7, [10, 0, 7, 14, 18, 3, 5, 12]);

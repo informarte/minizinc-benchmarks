@@ -11,7 +11,6 @@ int: N;
 int: Capacity;
     % Number of vehicles
 int: MinK;
-bool: FixedK;
 int: K = MinK;
     % Customer demands
 array[1..N] of int: Demands;
