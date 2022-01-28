@@ -2687,7 +2687,7 @@ test UB_AT_0(var int: v) = ub(v)<1e-5;
 
 
 function var int: CostScaledByDiscrLength(var int: L, float: unit_cost, float: costDivisor, float: lengthDiscr) =
-    CostScaledByDiscrLength__useMULT(L, unit_cost, costDivisor, lengthDiscr);
+    CostScaledByDiscrLength__useDIV(L, unit_cost, costDivisor, lengthDiscr);
 
 function var int: CostScaledByDiscrLength__useDIV(var int: L, float: unit_cost, float: costDivisor, float: lengthDiscr) =
   let {
