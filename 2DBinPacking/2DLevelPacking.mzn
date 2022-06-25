@@ -52,5 +52,8 @@ constraint
             forall( j in 1..i-1 ) ( x[i, j] = 0 /\ z[i, j] = 0) 
         );
 
-output
-["Objective = "] ++ [show(sum( k in 1..N ) (z[k, k] ))] ++ ["\n"];
+output [
+    "x  = ", show(x), "\n",
+    "z = ", show(z), "\n",
+    "objective = ", show(sum( k in 1..N ) ( z[k, k] ))
+];

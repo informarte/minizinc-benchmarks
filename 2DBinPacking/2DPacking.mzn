@@ -80,6 +80,7 @@ predicate is_feasible_packing(var 0..1: bin,
 
 output [
     "bin  = ", show(bin), "\n",
-    "item = ", show(item), "\n"
+    "item = ", show(item), "\n",
+    "objective = ", show( sum(k in Bins)(bin[k]))
 ];
 
