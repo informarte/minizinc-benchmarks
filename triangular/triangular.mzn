@@ -18,8 +18,9 @@ set of int: N = 1..n;
 
 array [N, N] of var 0..1: heart;    % Grid of equilateral triangulars
 
-var 1..n*n: objective =             % Number of 'hearts' in the grid
-    sum(i in N, j in 1..i)(heart[i, j]);
+var 1..n*n: objective;              % Number of 'hearts' in the grid
+
+constraint objective = sum(i in N, j in 1..i)(heart[i, j]);
 
 %------------------------------------------------------------------------------%
 % Constraints
