@@ -526,8 +526,8 @@ constraint implied_constraint(
 int: no_suction_cups;
 
 array[int,int] of int: suction_pick_tasks_orders;
-int: no_suction_picks = max(index_set_1of2(suction_pick_tasks_orders));
-int: suction_order_lengths = max(index_set_2of2(suction_pick_tasks_orders));
+int: no_suction_picks = card(index_set_1of2(suction_pick_tasks_orders));
+int: suction_order_lengths = card(index_set_2of2(suction_pick_tasks_orders));
 
 
 % -------------------------------------------------------
@@ -552,7 +552,7 @@ constraint forall(order_list_id in index_set_1of2(suction_pick_tasks_orders)) (
 % ========================================================
 array[int,int] of int: gripper_pick_tasks_orders;
 int: no_gripper_picks = card(index_set_1of2(gripper_pick_tasks_orders));
-int: gripper_order_lengths = max(index_set_2of2(gripper_pick_tasks_orders));
+int: gripper_order_lengths = card(index_set_2of2(gripper_pick_tasks_orders));
 
 % -------------------------------------------------------
 % -------------------------------------------------------
@@ -573,8 +573,8 @@ constraint forall(order_list_id in 1..no_gripper_picks) (
 % Fixture orderings - regex for agent model + interval constraints
 % =====================================================================
 array[int,int] of int: fixture_task_orders;
-int: no_fixtures = max(index_set_1of2(fixture_task_orders));
-int: fixture_order_lengths = max(index_set_2of2(fixture_task_orders));
+int: no_fixtures = card(index_set_1of2(fixture_task_orders));
+int: fixture_order_lengths = card(index_set_2of2(fixture_task_orders));
 
 % -------------------------------------------------------
 % ------------------------------------------------------
