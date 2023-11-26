@@ -88,16 +88,18 @@ constraint forall (i in 1..numStations, j in 3..numShifts, k in 1..numDays, l in
   count (m in 1..numPers) (assignShift[m,k] = j /\ assignStation[m,k] = i /\ assignSkill[m,k] = l) = demand[i,j,k,l]
 );
 % redundant constraint that checks for each skill if enough employees are scheduled that have prefs < 4
-constraint forall (i in 1..numStations, j in 1..numShifts where j != 2 \/ stationCommon[i], k in 1..numDays, l in 1..numSkills) (
-  count (m in 1..numPers) (
-    if j = 1 /\ not stationCommon[i] then
-      assignShift[m,k] = 1 \/ assignShift[m,k] = 2
-    else 
-      assignShift[m,k] = j 
-    endif /\
-    assignStation[m,k] = i /\
-    stationPrefs[m,i,l] < 4
-  ) >= demand[i,j,k,l]
+constraint redundant_constraint(
+  forall (i in 1..numStations, j in 1..numShifts where j != 2 \/ stationCommon[i], k in 1..numDays, l in 1..numSkills) (
+    count (m in 1..numPers) (
+      if j = 1 /\ not stationCommon[i] then
+        assignShift[m,k] = 1 \/ assignShift[m,k] = 2
+      else
+        assignShift[m,k] = j
+      endif /\
+      assignStation[m,k] = i /\
+      stationPrefs[m,i,l] < 4
+    ) >= demand[i,j,k,l]
+  )
 );
 % demand for subsuming stations, hardcoded to shift index 2
 constraint forall (i in 1..numSubsum, j in 1..numDays) (
