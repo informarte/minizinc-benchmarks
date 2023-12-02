@@ -131,7 +131,7 @@ set of int: Solutions = 1..nsols;
 array[Solutions,Tasks] of var Times: st;
 
 % Objectives for all solutions
-array[1..2, Solutions] of var int: objectives :: add_to_output;
+array[1..2, Solutions] of var int: objectives;
 constraint forall (s in Solutions) (objectives[..,s] = model(s));
 
 % Extreme points
