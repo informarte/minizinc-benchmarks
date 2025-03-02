@@ -4,6 +4,9 @@
 % The problem is to find communities in the graph with maximum modularity value 
 % satisfying must-link and cannot-link constraints which indicate whether a 
 % pair of vertices must assign to same or different communities.
+%
+% Objective bounds modified by MiniZinc Challenge organisers in 2024
+%
 %------------------------------------------------------------------------------%
 % Includes
 
@@ -36,8 +39,9 @@ int: dum = sum(i in 1..n)(W[i,i]);
 array[1..n] of var 1..k: x;
 var 1..k: kk = max(x);
 
-int: objub = 2*sum(i,j in 1..n where i < j)(W[i,j]) + dum;
-var 0..objub: objective;
+int: objlb = 2*sum(i,j in 1..n where i < j /\ W[i,j] < 0)(W[i,j]) + dum;
+int: objub = 2*sum(i,j in 1..n where i < j /\ W[i,j] > 0)(W[i,j]) + dum;
+var objlb..objub: objective;
 
 %------------------------------------------------------------------------------%
 % Constraints

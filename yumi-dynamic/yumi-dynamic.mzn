@@ -28,6 +28,9 @@
 % Latest Update 2021-06-23
 %============================================================================%
 
+% Changes by MiniZinc Organizers:
+% - Ensure max() calls with empty sets do not lead to unsatisfiability
+
 include "globals.mzn";
 % include "gecode.mzn";
 
@@ -527,8 +530,8 @@ constraint implied_constraint(
 int: no_suction_cups;
 
 array[int,int] of int: suction_pick_tasks_orders;
-int: no_suction_picks = max(index_set_1of2(suction_pick_tasks_orders));
-int: suction_order_lengths = max(index_set_2of2(suction_pick_tasks_orders));
+int: no_suction_picks = card(index_set_1of2(suction_pick_tasks_orders));
+int: suction_order_lengths = card(index_set_2of2(suction_pick_tasks_orders));
 
 
 % -------------------------------------------------------
@@ -553,7 +556,7 @@ constraint forall(order_list_id in index_set_1of2(suction_pick_tasks_orders)) (
 % ========================================================
 array[int,int] of int: gripper_pick_tasks_orders;
 int: no_gripper_picks = card(index_set_1of2(gripper_pick_tasks_orders));
-int: gripper_order_lengths = max(index_set_2of2(gripper_pick_tasks_orders));
+int: gripper_order_lengths = card(index_set_2of2(gripper_pick_tasks_orders));
 
 % -------------------------------------------------------
 % -------------------------------------------------------
@@ -574,8 +577,8 @@ constraint forall(order_list_id in 1..no_gripper_picks) (
 % Fixture orderings - regex for agent model + interval constraints
 % =====================================================================
 array[int,int] of int: fixture_task_orders;
-int: no_fixtures = max(index_set_1of2(fixture_task_orders));
-int: fixture_order_lengths = max(index_set_2of2(fixture_task_orders));
+int: no_fixtures = card(index_set_1of2(fixture_task_orders));
+int: fixture_order_lengths = card(index_set_2of2(fixture_task_orders));
 
 % -------------------------------------------------------
 % ------------------------------------------------------
@@ -802,10 +805,10 @@ bool: using_cumulative_per_zone = true;
 bool: using_diffn_per_zone = false;
 bool: using_unified_diffn = false;
 
-int: max_lwait = max( [ max(e) | e in wait_zones_left_data]  );
-int: max_rwait = max( [ max(e) | e in wait_zones_right_data] );
-int: max_lwork = max( [ max(e) | e in work_zones_left_data]  );
-int: max_rwork = max( [ max(e) | e in work_zones_right_data] );
+int: max_lwait = max( [ max(e) default 0 | e in wait_zones_left_data]  );
+int: max_rwait = max( [ max(e) default 0 | e in wait_zones_right_data] );
+int: max_lwork = max( [ max(e) default 0 | e in work_zones_left_data]  );
+int: max_rwork = max( [ max(e) default 0 | e in work_zones_right_data] );
 
 
 int: max_zones = max([max_lwait, max_rwait, max_lwork, max_rwork]);
