@@ -113,27 +113,27 @@ constraint forall (r in Resources, s in Slots where occurs(fixed[r, s])) (
 %
 
 constraint forall (r in Resources, s in Slots) (
-    if s = slots then
-        run_end[r, s] = true
-    else
-        run_end[r, s] = (schedule[r, s] != schedule[r, s+1])
-    endif
+    run_end[r, s] =
+        if s = slots
+        then true
+        else (schedule[r, s] != schedule[r, s+1])
+        endif
 );
 
 constraint forall (r in Resources, s in Slots) (
-    if s = 1 \/ run_end[r, s-1] then
-        run_length[r, s] = 1
-    else
-        run_length[r, s] = run_length[r, s-1] + 1
-    endif
+    run_length[r, s] =
+        if s = 1 \/ run_end[r, s-1]
+        then 1
+        else run_length[r, s-1] + 1
+        endif
 );
 
 constraint forall (r in Resources, s in Slots) (
-    if run_end[r, s] then
-        run_cost[r, s] = extended_activity_run_cost[schedule[r, s], run_length[r, s]]
-    else
-        run_cost[r, s] = 0
-    endif
+    run_cost[r, s] =
+        if run_end[r, s]
+        then extended_activity_run_cost[schedule[r, s], run_length[r, s]]
+        else 0
+        endif
 );
 
 %
