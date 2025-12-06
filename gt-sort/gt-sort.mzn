@@ -54,7 +54,7 @@ constraint forall(i in L diff {max(L)})( % for layer i, constrain parents in lay
     % y[j,1] is the index of the left child of parent node (i+1,j)
     any: y = y_pairs[i].y;
     constraint alldifferent(y);
-    constraint strictly_increasing(j in 1..pairs)(y[j,1]); % symmetry
+    constraint symmetry_breaking_constraint(strictly_increasing(j in 1..pairs)(y[j,1]));
     constraint if run = BASELINE then y = array2d(1..pairs, 1..2, [ z | z in 1..(pairs*2) ]) endif ;
   } in
   forall(j in index_set(s))(
