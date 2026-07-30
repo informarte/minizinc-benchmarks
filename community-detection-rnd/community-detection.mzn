@@ -39,16 +39,12 @@ array [NODE] of int: k = [sum (j in NODE) (A[i, j]) | i in NODE]; % Node degrees
 % Modularity matrix (multiplied by l so no fractions)
 array [NODE, NODE] of int: B = array2d(NODE, NODE, [l * A[i, j] - k[i] * k[j] | i, j in NODE]);
 
-% Objective bounds (compiler should be able to tighten using same/diff_community)
-int: obj_lb = sum (i, j in NODE where i < j /\ B[i, j] < 0) (B[i, j]);
-int: obj_ub = sum (i, j in NODE where i < j /\ B[i, j] > 0) (B[i, j]);
-
 %------------------------------------------------------------------------------%
 % Variables
 
 array [NODE] of var COMMUNITY: x :: add_to_output;
 
-var obj_lb..obj_ub: objective = sum (i, j in NODE where i < j /\ x[i] = x[j]) (B[i, j]);
+var int: objective = sum (i, j in NODE where i < j /\ x[i] = x[j]) (B[i, j]);
 
 %------------------------------------------------------------------------------%
 % Constraints
